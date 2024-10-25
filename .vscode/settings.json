@@ -1,0 +1,8 @@
+{
+    "python.testing.pytestArgs": [
+        "C:\\Users\\george.busby\\Documents\\Dessert Shop\\Testing"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+
+}
