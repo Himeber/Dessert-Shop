@@ -1,4 +1,4 @@
-from dessert_shop import (
+from desserts import (
     DessertItem,
     Candy,
     IceCream,
