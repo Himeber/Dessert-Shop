@@ -55,8 +55,7 @@ def main():
     timeprint("Items in order:")
     print(line())
     for i in order.desserts:
-        timeprint(str(i))
-        print(line())
+        timeprint(str(i.name))
     timeprint(f"There are {len(order)} items in the order.")
 class DessertItem:
     def __init__(self,name='bob'):
@@ -111,3 +110,6 @@ class Order:
 
     def __len__(self):
         return len(self.desserts)
+
+cs()
+main()
