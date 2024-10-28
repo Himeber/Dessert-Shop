@@ -43,6 +43,21 @@ def line():
     return "-----------------------"
 
 #ACTUAL CODE STARTS HERE
+
+def main():
+    order = Order()
+    order.additem(Candy("Candy Corn", 1.5, .25))
+    order.additem(Candy("Gummy Bears", .25, .35))
+    order.additem(Cookie("Chocolate Chip", 6, 3.99))
+    order.additem(IceCream("Pistachio", 2, .79))
+    order.additem(Sundae("Vanilla", 3, .69, "Hot Fudge", 1.29))
+    order.additem(Cookie("Oatmeal Raisin", 2, 3.45))
+    timeprint("Items in order:")
+    print(line())
+    for i in order.desserts:
+        timeprint(str(i))
+        print(line())
+    timeprint(f"There are {len(order)} items in the order.")
 class DessertItem:
     def __init__(self,name='bob'):
         self.name = name
@@ -50,7 +65,7 @@ class DessertItem:
         return str(f"""{self.name}""")
 
 class Candy(DessertItem):
-    def __init__(self,name,candyWeight=0.0,pricePerPound=0.0):
+    def __init__(self,name='bob',candyWeight=0.0,pricePerPound=0.0):
         super().__init__(name)
         self.candyWeight = 0.0
         self.pricePerPound = 0.0
@@ -59,7 +74,7 @@ class Candy(DessertItem):
 ${str(self.pricePerPound)} per pound""")
 
 class Cookie(DessertItem):
-    def __init__(self,name,quantity=0,pricePerDozen=0.0):
+    def __init__(self,name='bob',quantity=0,pricePerDozen=0.0):
         super().__init__(name)
         self.quantity = quantity
         self.pricePerDozen = pricePerDozen
@@ -68,7 +83,7 @@ class Cookie(DessertItem):
 ${str(self.pricePerDozen)} per dozen""")
 
 class IceCream(DessertItem):
-    def __init__(self,name,scoopCount=0,pricePerScoop=0.0):
+    def __init__(self,name='bob',scoopCount=0,pricePerScoop=0.0):
         super().__init__(name)
         self.scoopCount = scoopCount
         self.pricePerScoop = pricePerScoop
@@ -77,7 +92,7 @@ class IceCream(DessertItem):
 ${str(self.pricePerScoop)} per scoop""")
 
 class Sundae(IceCream):
-    def __init__(self,name,scoopCount=0,pricePerScoop=0.0,toppingName="",toppingPrice=0.0):
+    def __init__(self,name='bob',scoopCount=0,pricePerScoop=0.0,toppingName="",toppingPrice=0.0):
         super().__init__(name,scoopCount,pricePerScoop)
         self.toppingName = toppingName
         self.toppingPrice = toppingPrice
@@ -86,3 +101,13 @@ class Sundae(IceCream):
 ${str(self.pricePerScoop)} per scoop
 Topped with {self.toppingName}
 Topping costs ${str(self.toppingPrice)}""")
+
+class Order:
+    def __init__(self,desserts=[]):
+        self.desserts = desserts
+    
+    def additem(self,item):
+        self.desserts.append(item)
+
+    def __len__(self):
+        return len(self.desserts)
