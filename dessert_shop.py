@@ -9,6 +9,7 @@ from desserts import (
     Cookie,
     Candy
 )
+from receipt_maker import *
 # functions
 def cs():
     print('\033c')
@@ -49,7 +50,29 @@ def line():
     return "-----------------------"
 
 #ACTUAL CODE STARTS HERE
+class Order:
+    def __init__(self,desserts=[]):
+        self.desserts = desserts
+    
+    def additem(self,item):
+        self.desserts.append(item)
 
+    def __len__(self):
+        return len(self.desserts)
+    
+    def order_cost(self):
+        total = 0.0
+        for dessert in self.desserts:
+            total += dessert.calculate_cost()
+        return round(total,2)
+
+    def order_tax(self):
+        total = 0.0
+        for dessert in self.desserts:
+            total += dessert.calculate_tax()
+        return round(total,2)
+
+  
 def main():
     order = Order()
     order.additem(Candy("Candy Corn", 1.5, .25))
@@ -63,15 +86,14 @@ def main():
     for i in order.desserts:
         timeprint(str(i.name))
     timeprint(f"There are {len(order)} items in the order.")
-class Order:
-    def __init__(self,desserts=[]):
-        self.desserts = desserts
-    
-    def additem(self,item):
-        self.desserts.append(item)
+    data = [ 
+    ["Name", "Price", "Tax" ]]
+    for item in order.desserts:
+        data.append([item.name, '$' + str(item.calculate_cost()), '$' + str(item.calculate_tax())])
+    data.append([ "Subtotal", '$' +str(order.order_cost()), '$' +str(order.order_tax())])
+    data.append([ "Total", "", '$' +str(order.order_cost() + order.order_tax())])
+    make_receipt(data,'receipt.pdf')
 
-    def __len__(self):
-        return len(self.desserts)
 
 cs()
 main()
