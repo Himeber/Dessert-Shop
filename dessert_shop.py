@@ -64,13 +64,13 @@ class Order:
         total = 0.0
         for dessert in self.desserts:
             total += dessert.calculate_cost()
-        return round(total,2)
+        return total
 
     def order_tax(self):
         total = 0.0
         for dessert in self.desserts:
             total += dessert.calculate_tax()
-        return round(total,2)
+        return total
 
   
 def main():
@@ -89,9 +89,10 @@ def main():
     data = [ 
     ["Name", "Price", "Tax" ]]
     for item in order.desserts:
-        data.append([item.name, '$' + str(item.calculate_cost()), '$' + str(item.calculate_tax())])
-    data.append([ "Subtotal", '$' +str(order.order_cost()), '$' +str(order.order_tax())])
-    data.append([ "Total", "", '$' +str(order.order_cost() + order.order_tax())])
+        data.append([item.name, '$' + str(round(item.calculate_cost(),2)), '$' + str(round(item.calculate_tax(),2))])
+    data.append([ "Subtotal", '$' +str(round(order.order_cost(),2)), '$' +str(round(order.order_tax(),2))])
+    data.append([ "Total", "", '$' +str(round(order.order_cost() + order.order_tax(),2))])
+    data.append(["Total items in the order","",str(len(order))])
     make_receipt(data,'receipt.pdf')
 
 
