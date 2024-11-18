@@ -54,7 +54,7 @@ class Order:
     def __init__(self,desserts=[]):
         self.desserts = desserts
     
-    def additem(self,item):
+    def add(self,item):
         self.desserts.append(item)
 
     def __len__(self):
@@ -72,20 +72,84 @@ class Order:
             total += dessert.calculate_tax()
         return total
 
-  
+class DessertShop:
+    def __init__(self,order=None):
+        self.order = order
+    
+    def user_prompt_candy(self):
+        name = strput("Enter the type of candy.")
+        cost = float(strput("Enter the cost per pound."))
+        amount = float(strput("Enter the amount of candy in pounds."))
+        return Candy(name,amount,cost)
+    
+    def user_prompt_cookie(self):
+        name = strput("Enter the type of cookie.")
+        cost = float(strput("Enter the cost per dozen."))
+        amount = intput("Enter the amount of cookies.")
+        return Cookie(name,amount,cost)
+    
+    def user_prompt_icecream(self):
+        name = strput("Enter the type of ice cream.")
+        cost = float(strput("Enter the cost per scoop."))
+        amount = intput("Enter the amount of scoops.")
+        return IceCream(name,amount,cost)
+    
+    def user_prompt_sundae(self):
+        name = strput("Enter the type of icecream.")
+        cost = float(strput("Enter the cost per scoop."))
+        amount = intput("Enter the amount of scoops.")
+        topping = strput("Enter the topping.")
+        toppingcost = float(strput("Enter the price of the topping."))
+        return Sundae(name,amount,cost,topping,toppingcost)
+
 def main():
+    shop = DessertShop()
     order = Order()
-    order.additem(Candy("Candy Corn", 1.5, .25))
-    order.additem(Candy("Gummy Bears", .25, .35))
-    order.additem(Cookie("Chocolate Chip", 6, 3.99))
-    order.additem(IceCream("Pistachio", 2, .79))
-    order.additem(Sundae("Vanilla", 3, .69, "Hot Fudge", 1.29))
-    order.additem(Cookie("Oatmeal Raisin", 2, 3.45))
-    timeprint("Items in order:")
-    print(line())
-    for i in order.desserts:
-        timeprint(str(i.name))
-    timeprint(f"There are {len(order)} items in the order.")
+    '''
+    order.add(Candy('Candy Corn', 1.5, 0.25))
+    order.add(Candy('Gummy Bears', 0.25, 0.35))
+    order.add(Cookie('Chocolate Chip', 6, 3.99))
+    order.add(IceCream('Pistachio', 2, 0.79))
+    order.add(Sundae('Vanilla', 3, 0.69, 'Hot Fudge', 1.29))
+    order.add(Cookie('Oatmeal Raisin', 2, 3.45))
+    '''
+    # boolean done = false
+    done: bool = False
+    # build the prompt string once
+    prompt = '\n'.join([
+    '1: Candy',
+    '2: Cookie',
+    '3: Ice Cream',
+    '4: Sundae',
+    '\nWhat would you like to add to the order? (1-4, Enter for done): '
+    ])
+    while not done:
+      cs()
+      choice = strput(prompt)
+      match choice:
+        case '':
+            done = True
+        case '1':
+            item = shop.user_prompt_candy()
+            order.add(item)
+            timeprint(f'{item.name} has been added to your order.')
+        case '2':
+            item = shop.user_prompt_cookie()
+            order.add(item)
+            timeprint(f'{item.name} has been added to your order.')
+        case '3':
+            item = shop.user_prompt_icecream()
+            order.add(item)
+            timeprint(f'{item.name} has been added to your order.')
+        case '4':
+            item = shop.user_prompt_sundae()
+            order.add(item)
+            timeprint(f'{item.name} has been added to your order.')
+        case _:
+            timeprint('Invalid response: Please enter a choice from the menu (1-4) or Enter')
+    #
+    #add your code below here to print the PDF receipt as the last thing in main()
+    #
     data = [ 
     ["Name", "Price", "Tax" ]]
     for item in order.desserts:
@@ -93,8 +157,7 @@ def main():
     data.append([ "Subtotal", '$' +str(round(order.order_cost(),2)), '$' +str(round(order.order_tax(),2))])
     data.append([ "Total", "", '$' +str(round(order.order_cost() + order.order_tax(),2))])
     data.append(["Total items in the order","",str(len(order))])
-    make_receipt(data,'receipt.pdf')
-
+    make_receipt(data,"reciept.pdf")
 
 cs()
 main()
