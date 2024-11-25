@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-
-class DessertItem(ABC):
+from packaging import Packaging
+class DessertItem(Packaging,ABC):
     def __init__(self,name='bob',tax_percent=7.25):
         self.name = name
         self.taxpercent = tax_percent
@@ -32,7 +32,7 @@ ${str(self.pricePerPound)} per pound""")
         return self.pricePerPound * self.candyWeight
     
     def __str__(self):
-        return f"{self.name}, {self.candyWeight}lbs, ${self.pricePerPound} per pound, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
+        return f"{self.name}, {self.candyWeight}lbs, ${self.pricePerPound} per pound, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}, packaging {self.packaging}"
 
 class Cookie(DessertItem):
     def __init__(self,name='bob',quantity=0,pricePerDozen=0.0):
@@ -47,7 +47,7 @@ ${str(self.pricePerDozen)} per dozen""")
     def calculate_cost(self):
         return self.pricePerDozen * (self.quantity/12)
     def __str__(self):
-        return f"{self.name}, {self.quantity} cookies, ${self.pricePerDozen} per dozen, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
+        return f"{self.name}, {self.quantity} cookies, ${self.pricePerDozen} per dozen, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}, packaging {self.packaging}"
 
 class IceCream(DessertItem):
     def __init__(self,name='bob',scoopCount=0,pricePerScoop=0.0):
@@ -63,7 +63,7 @@ ${str(self.pricePerScoop)} per scoop""")
         return self.scoopCount * self.pricePerScoop
     
     def __str__(self):
-        return f"{self.name}, {self.scoopCount} scoops, ${self.pricePerScoop} per scoop, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
+        return f"{self.name}, {self.scoopCount} scoops, ${self.pricePerScoop} per scoop, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}, packaging {self.packaging}"
 
 class Sundae(IceCream):
     def __init__(self,name='bob',scoopCount=0,pricePerScoop=0.0,toppingName="",toppingPrice=0.0):
@@ -81,4 +81,4 @@ Topping costs ${str(self.toppingPrice)}""")
         return self.pricePerScoop * self.scoopCount + self.toppingPrice
     
     def __str__(self):
-        return f"{self.name}, {self.scoopCount}scoops, ${self.pricePerScoop} per scoop, topping of {self.toppingName}, topping price ${self.toppingPrice}, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
+        return f"{self.name}, {self.scoopCount}scoops, ${self.pricePerScoop} per scoop, topping of {self.toppingName}, topping price ${self.toppingPrice}, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}, packaging {self.packaging}"
