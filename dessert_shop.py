@@ -160,7 +160,7 @@ def main():
     data = [ 
     ["Name", "Price", "Tax" ]]
     for item in order.desserts:
-        data.append([item.name, '$' + str(round(item.calculate_cost(),2)), '$' + str(round(item.calculate_tax(),2))])
+        data.append([f"{item.name} ({item.packaging})", '$' + str(round(item.calculate_cost(),2)), '$' + str(round(item.calculate_tax(),2))])
     data.append([ "Subtotal", '$' +str(round(order.order_cost(),2)), '$' +str(round(order.order_tax(),2))])
     data.append([ "Total", "", '$' +str(round(order.order_cost() + order.order_tax(),2))])
     data.append(["Total items in the order","",str(len(order))])
