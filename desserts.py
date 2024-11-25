@@ -14,6 +14,9 @@ class DessertItem(ABC):
     
     def calculate_tax(self):
         return self.calculate_cost() * (self.taxpercent/100)
+    
+    def __str__(self):
+        pass
 
 class Candy(DessertItem):
     def __init__(self,name='bob',candyWeight=0.0,pricePerPound=0.0):
@@ -27,6 +30,9 @@ ${str(self.pricePerPound)} per pound""")
     
     def calculate_cost(self):
         return self.pricePerPound * self.candyWeight
+    
+    def __str__(self):
+        return f"{self.name}, {self.candyWeight}lbs, ${self.pricePerPound} per pound, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
 
 class Cookie(DessertItem):
     def __init__(self,name='bob',quantity=0,pricePerDozen=0.0):
@@ -40,6 +46,8 @@ ${str(self.pricePerDozen)} per dozen""")
     
     def calculate_cost(self):
         return self.pricePerDozen * (self.quantity/12)
+    def __str__(self):
+        return f"{self.name}, {self.quantity} cookies, ${self.pricePerDozen} per dozen, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
 
 class IceCream(DessertItem):
     def __init__(self,name='bob',scoopCount=0,pricePerScoop=0.0):
@@ -53,6 +61,9 @@ ${str(self.pricePerScoop)} per scoop""")
     
     def calculate_cost(self):
         return self.scoopCount * self.pricePerScoop
+    
+    def __str__(self):
+        return f"{self.name}, {self.scoopCount} scoops, ${self.pricePerScoop} per scoop, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"
 
 class Sundae(IceCream):
     def __init__(self,name='bob',scoopCount=0,pricePerScoop=0.0,toppingName="",toppingPrice=0.0):
@@ -68,3 +79,6 @@ Topping costs ${str(self.toppingPrice)}""")
     
     def calculate_cost(self):
         return self.pricePerScoop * self.scoopCount + self.toppingPrice
+    
+    def __str__(self):
+        return f"{self.name}, {self.scoopCount}scoops, ${self.pricePerScoop} per scoop, topping of {self.toppingName}, topping price ${self.toppingPrice}, total cost ${self.calculate_cost()}, tax ${self.calculate_tax()}"

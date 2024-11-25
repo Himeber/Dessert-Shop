@@ -71,6 +71,13 @@ class Order:
         for dessert in self.desserts:
             total += dessert.calculate_tax()
         return total
+    
+    def __str__(self):
+        returner = "Order:"
+        for item in self.desserts:
+            returner += "\n"
+            returner += str(item)
+        return returner
 
 class DessertShop:
     def __init__(self,order=None):
